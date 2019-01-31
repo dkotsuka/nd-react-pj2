@@ -26,6 +26,26 @@ export const getComment = (commentId) =>
 	fetch( `${baseURL}/comments/${commentId}`, { headers } )
 		.then(res => res.json())
 
+export const voteComment = (id, value) => 
+  fetch(`${baseURL}/comments/${id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({option: value})
+  }).then(res => res.json())
+
+export const addNewComment = (comment) => 
+fetch(`${baseURL}/comments`, {
+  method: 'POST',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(comment)
+}).then(res => res.json())
+
 
 export const addNewPost = (post) => 
 	fetch(`${baseURL}/posts`, {

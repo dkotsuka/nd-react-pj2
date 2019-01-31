@@ -1,5 +1,372 @@
 $font: 'Roboto', sans-serif;
+$primary-background: #0d47a1;
+$primary-background-dark: #002171;
+$primary-background-light: #5472d3;
+$primary-text: white;
+$secondary-background: #b71c1c;
+$secondary-background-dark: #7f0000;
+$secondary-background-light: #f05545;
+$hover: rgba(255,255,255, 0.5);
+$secondary-text: #222;
 
-body {
-	font-family: $font;
+* {
+	margin: 0;
+	padding: 0;
 }
+
+a {
+	text-decoration: none;
+	color: auto;
+}
+
+li {
+	list-style: none;
+}
+
+body  {
+	font-family: $font;
+	color: $secondary-text;
+}
+
+.post{
+	width: 100%;
+	.post-container {
+		border: 1px solid $secondary-background;
+		border-radius: 5px;
+		margin: 10px;
+		display: flex;
+		.votes-container {
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			color: $primary-text;
+			background-color: $secondary-background;
+			button {
+				background-color: transparent;
+				border: none;
+				border-radius: 5px;
+				width: 32px;
+				height: 32px;
+			}
+			button:hover {
+				background-color: $hover;
+			}
+		}
+		a {
+			width: 100%;
+			padding: 15px;
+			.post-content {
+				width: 100%;
+				color: $secondary-text;
+				h2 {
+					font-size: 1.2rem;
+					font-weight: normal;
+					line-height: 1.8rem;
+					span {
+						color: $secondary-background-light;
+						border: 1px solid $secondary-background-light;
+						border-radius: 5px;
+						padding: 2px 5px;
+						margin-right: 5px;
+					}
+				}
+				span {
+					color: gray;
+					font-size: 0.8rem;
+				}
+				p {
+					margin: 10px 0;
+				}
+			}
+		}
+		
+		.comment-count {
+			text-align: right;
+			span {
+				font-size: 1rem;
+				margin-left: 5px;
+			}
+		}
+	}
+	.post-container:hover {
+		box-shadow: 0 0 0 2px inset $secondary-background;
+	}
+	@media screen and (min-width: 605px) {
+		.post-container {
+			width: 575px;
+			margin: 10px auto;
+		}
+	}
+	@media screen and (min-width: 780px) {
+		.post-container {
+			width: 680px;
+			margin: 10px auto;
+		}
+	}
+}
+
+.navbar {
+	nav {
+		height: 50px;
+		display: flex;
+		a {
+			color: auto;
+			text-decoration: none;
+		}
+		h1 {
+			color: $primary-background;
+			border: 3px solid $primary-background;
+			background-color: $primary-text;
+			line-height: 50px;
+			border-radius: 5px;
+			display: inline;
+			padding: 5px;
+		}
+		ul {
+			display: flex;
+			list-style: none;
+			background-color: $primary-background;
+			margin: 7px 0;
+			height: 36px;
+			width: 100%;
+			justify-content: flex-end;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+			.active {
+				background-color: white;
+				border: 3px solid $primary-background;
+				border-radius: 5px;
+				li {
+					color: $primary-background;
+					line-height: 30px;
+				}
+			}
+			li {
+				line-height: 36px;
+				font-size: 1rem;
+				text-transform: capitalize;
+				color: $primary-text;
+				padding: 0 15px;
+			}
+			.hidden {
+				display: none;
+			}
+			.page-name {
+				font-style: italic;
+			}
+		}
+
+	}
+	@media screen and (max-width: 500px){
+		nav {
+			background-color: $primary-background;
+			h1 {
+				border: none;
+				margin: 0 5px;
+			}
+			ul {
+				li {
+					margin: 0 5px;
+				}
+			}
+		}
+		
+	}
+	@media screen and (min-width: 605px) {
+		nav {
+			width: 575px;
+			margin: 10px auto;
+		}
+	}
+	@media screen and (min-width: 780px) {
+		nav {
+			width: 680px;
+			margin: 10px auto;
+		}
+	}
+}
+
+.empty-box {
+	border: 2px solid gray;
+	border-radius: 5px;
+	margin: 5px;
+	font-size: 1.2rem;
+	padding: 15px 0;
+	text-align: center;
+	color: gray;
+}
+
+.selector-container {
+	text-align: right;
+	line-height: 30px;
+	display: flex;
+	justify-content: space-between;
+	margin: 5px 10px;
+	a {
+		color: auto;
+		text-decoration: none;
+		span {
+			color: $secondary-background;
+			border: 1px solid $secondary-background;
+			border-radius: 5px;
+			padding: 5px 10px;
+		}
+	}
+	a:hover {
+		span {
+			background-color: $secondary-background-light;
+			color: $primary-text
+		}
+		
+	}
+	select {
+		font-size: 1rem;
+		height: 30px;
+		border-color: $secondary-background;
+		border-radius: 5px;
+	}
+}
+
+.input-container {
+	form {
+		display: flex;
+		flex-direction: column;
+		font-size: 1rem;
+		div {
+			display: flex;
+			justify-content: space-between;
+		}
+		label {
+			text-align: right;
+			margin: 5px;
+			select {
+				line-height: 30px;
+				font-size: 1rem;
+				height: 30px;
+				border-radius: 5px;
+				border: 1px solid gray;
+				margin-left: 5px;
+			}
+		}
+		input {
+			line-height: 30px;
+			font-size: 1rem;
+			padding: 5px;
+			border-radius: 5px;
+			border: 1px solid gray;
+			margin: 5px;
+		}
+
+		textarea {
+			font-family: $font;
+			font-size: 1rem;
+			padding: 5px;
+			height: 200px;
+			border-radius: 5px;
+			border: 1px solid gray;
+			margin: 5px;
+		}
+	}
+
+}
+.comment-container.empty {
+	justify-content: center;
+	padding: 15px 0;
+}
+.comment-container {
+	display: flex;
+	border: 1px solid gray;
+	border-radius: 5px;
+	margin: 10px;
+	.vote-score {
+		display: flex;
+		flex-direction: column;
+		background-color: gray;
+		text-align: center;
+		color: $primary-text;
+		button {
+			background-color: transparent;
+			border: none;
+			border-radius: 5px;
+			width: 32px;
+			height: 32px;
+		}
+		button:hover {
+			background-color: $hover;
+		}
+	}
+	.content {
+		padding: 15px;
+		span {
+			color: gray;
+			font-size: 0.8rem;
+		}
+	}
+}
+
+.component {
+	margin: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.red-button {
+	color: $secondary-background;
+	background-color: transparent;
+	border: 1px solid $secondary-background;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+.red-button:hover {
+	background-color: $secondary-background-light;
+	color: $primary-text
+}
+
+.comment-box {
+	margin: 10px;
+	form {
+		display: flex;
+		flex-direction: column;
+
+		label {
+			margin: 10px 0;
+			input {
+				height: 30px;
+				margin-left: 5px;
+				padding: 0 5px;
+			}
+		}
+		button {
+			margin: 10px 0;
+		}
+		textarea {
+			padding: 10px;
+			height: 150px;
+		}
+	}
+}
+
+@media screen and (min-width: 605px) {
+	.empty-box,
+	.selector-container, 
+	.input-container, 
+	.comment-container, 
+	.component,
+	.comment-box {
+		width: 575px;
+		margin: 10px auto;
+	}
+}
+@media screen and (min-width: 780px) {
+	.empty-box, 
+	.selector-container, 
+	.input-container, 
+	.comment-container, 
+	.component,
+	.comment-box {
+		width: 680px;
+		margin: 10px auto;
+	}
+}
+
