@@ -3,20 +3,26 @@ import { NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 function Nav(props) {
+
+	const { params } = props.match
 	const path = props.location.pathname
 	let pageName
-	if (path.includes("/newpost")) {
+
+	if (path.includes("/new")) {
 		pageName = "New post"
-	} else if (path.includes("/post/")) {
+	} else if (params.category && params.id) {
 		pageName = "Post details"
+	} else if(path.includes("/edit/")) {
+		pageName = "Edit post"
 	}
+
 	return <div className='navbar'>
 		<nav>
 			<NavLink to='/' exact><h1>Readit!</h1></NavLink>
 
 			<ul>
 				{props.categories.map((category) => (
-					<NavLink to={`/category/${category.path}`} 
+					<NavLink to={`/${category.path}`} 
 						exact activeClassName='active'
 						className={`${pageName ? "hidden" : ""}`}
 						key={category.name}>

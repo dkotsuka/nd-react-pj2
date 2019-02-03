@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { connect }  from 'react-redux'
 import { getInitialPosts } from '../actions/posts'
 import { getAllCategories } from '../actions/categories'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import PostListView from './PostListView'
-import NewPostView from './NewPostView'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import PostList from './PostList'
+import EditPostView from './EditPostView'
 import PostDetails from './PostDetails'
+import Page404 from './Page404'
 
 class App extends Component {
 
@@ -18,10 +19,14 @@ class App extends Component {
     return (
       <Router >
         <div className="App">
-          <Route path='/' exact component={PostListView} />
-          <Route path='/category' component={PostListView} />
-          <Route path='/post/:id' component={PostDetails} />
-          <Route path='/newpost' component={NewPostView} />
+          <Switch>
+            <Route path='/' exact component={PostList} />
+            <Route path='/404' exact component={Page404} />
+            <Route path='/new' exact component={EditPostView} />
+            <Route path='/edit/:id' exact component={EditPostView} />
+            <Route path='/:category' exact component={PostList} />
+            <Route path='/:category/:id' exact component={PostDetails} />
+          </Switch>
         </div>
       </Router>
     )

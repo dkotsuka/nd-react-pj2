@@ -236,6 +236,11 @@ body  {
 			display: flex;
 			justify-content: space-between;
 		}
+		span {
+			line-height: 30px;
+			margin-left: 5px;
+			font-style: italic;
+		}
 		label {
 			text-align: right;
 			margin: 5px;
@@ -296,10 +301,17 @@ body  {
 		}
 	}
 	.content {
-		padding: 15px;
+		padding: 10px 15px 0 15px;
+		width: 100%;
 		span {
 			color: gray;
 			font-size: 0.8rem;
+		}
+		.button-container {
+			text-align: right;
+			button {
+				margin-left: 5px;
+			}
 		}
 	}
 }
@@ -331,10 +343,15 @@ body  {
 
 		label {
 			margin: 10px 0;
+			color: gray;
 			input {
 				height: 30px;
 				margin-left: 5px;
 				padding: 0 5px;
+			}
+			span {
+				font-style: italic;
+				margin-left: 5px;
 			}
 		}
 		button {
@@ -347,24 +364,34 @@ body  {
 	}
 }
 
+.edit-post {
+	text-align: right;
+	margin: 10px;
+
+	button {
+		margin-left: 5px;
+	}
+}
+
+.error {
+	p {
+		font-size: 1.4rem;
+		color: gray;
+		text-align: center;
+		height: 200px;
+		line-height: 200px;
+	}
+}
+
 @media screen and (min-width: 605px) {
-	.empty-box,
-	.selector-container, 
-	.input-container, 
-	.comment-container, 
-	.component,
-	.comment-box {
+	.container {
 		width: 575px;
 		margin: 10px auto;
 	}
 }
+
 @media screen and (min-width: 780px) {
-	.empty-box, 
-	.selector-container, 
-	.input-container, 
-	.comment-container, 
-	.component,
-	.comment-box {
+	.container {
 		width: 680px;
 		margin: 10px auto;
 	}

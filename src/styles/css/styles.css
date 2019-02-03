@@ -215,6 +215,11 @@ body {
   display: flex;
   justify-content: space-between;
 }
+.input-container form span {
+  line-height: 30px;
+  margin-left: 5px;
+  font-style: italic;
+}
 .input-container form label {
   text-align: right;
   margin: 5px;
@@ -274,11 +279,18 @@ body {
   background-color: rgba(255, 255, 255, 0.5);
 }
 .comment-container .content {
-  padding: 15px;
+  padding: 10px 15px 0 15px;
+  width: 100%;
 }
 .comment-container .content span {
   color: gray;
   font-size: 0.8rem;
+}
+.comment-container .content .button-container {
+  text-align: right;
+}
+.comment-container .content .button-container button {
+  margin-left: 5px;
 }
 
 .component {
@@ -309,11 +321,16 @@ body {
 }
 .comment-box form label {
   margin: 10px 0;
+  color: gray;
 }
 .comment-box form label input {
   height: 30px;
   margin-left: 5px;
   padding: 0 5px;
+}
+.comment-box form label span {
+  font-style: italic;
+  margin-left: 5px;
 }
 .comment-box form button {
   margin: 10px 0;
@@ -323,24 +340,30 @@ body {
   height: 150px;
 }
 
+.edit-post {
+  text-align: right;
+  margin: 10px;
+}
+.edit-post button {
+  margin-left: 5px;
+}
+
+.error p {
+  font-size: 1.4rem;
+  color: gray;
+  text-align: center;
+  height: 200px;
+  line-height: 200px;
+}
+
 @media screen and (min-width: 605px) {
-  .empty-box,
-.selector-container,
-.input-container,
-.comment-container,
-.component,
-.comment-box {
+  .container {
     width: 575px;
     margin: 10px auto;
   }
 }
 @media screen and (min-width: 780px) {
-  .empty-box,
-.selector-container,
-.input-container,
-.comment-container,
-.component,
-.comment-box {
+  .container {
     width: 680px;
     margin: 10px auto;
   }

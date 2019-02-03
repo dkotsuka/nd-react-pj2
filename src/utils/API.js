@@ -36,6 +36,24 @@ export const voteComment = (id, value) =>
     body: JSON.stringify({option: value})
   }).then(res => res.json())
 
+export const removePost = (id) => 
+  fetch(`${baseURL}/posts/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+
+export const removeComment = (id) => 
+  fetch(`${baseURL}/comments/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+
 export const addNewComment = (comment) => 
 fetch(`${baseURL}/comments`, {
   method: 'POST',
@@ -46,6 +64,15 @@ fetch(`${baseURL}/comments`, {
   body: JSON.stringify(comment)
 }).then(res => res.json())
 
+export const modifyComment = (id, comment) => 
+fetch(`${baseURL}/comments/${id}`, {
+  method: 'PUT',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(comment)
+}).then(res => res.json())
 
 export const addNewPost = (post) => 
 	fetch(`${baseURL}/posts`, {
@@ -67,7 +94,7 @@ export const votePost = (postId, value) =>
     body: JSON.stringify({option: value})
   }).then(res => res.json())
 
-export const editPost = (post) =>
+export const modifyPost = (post) =>
   fetch(`${baseURL}/posts/${post.id}`, {
     method: 'PUT',
     headers: {

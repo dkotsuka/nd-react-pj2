@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getComments, handleVoteComment } from '../actions/comments'
+import { getComments, handleVoteComment, handleDeleteComment } from '../actions/comments'
+import { handleRefreshPost } from '../actions/posts'
 import { formatDate } from '../utils/helpers'
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa'
 import { IconContext } from "react-icons"
@@ -13,15 +14,17 @@ class CommentList extends Component {
 		}
 	}
 
+	onDeleteComment(id) {
+		this.props.dispatch(handleDeleteComment(id))
+		this.props.dispatch(handleRefreshPost(this.props.id))
+	}
+
 	render() {
-		let comments = this.props.comments
-		if(!comments) {
-			comments = []
-		}
+		const { comments } = this.props
 		return <ul>
  			{	comments.length > 0
  				? comments.map((comment) => (
-	 				<li key={comment.id} className='comment-container'>
+	 				<li key={comment.id} className='comment-container container'>
 	 					<div className='vote-score'>
 		 					<IconContext.Provider value={{ color: '#FFF', size: '1rem' }}>
 								<button onClick={() => this.props.dispatch(handleVoteComment(comment.id, "upVote"))}>
@@ -33,13 +36,24 @@ class CommentList extends Component {
 								</button>
 							</IconContext.Provider>
 	 					</div>
-	 					<div className='content'>
+	 					<div className='content container'>
 		 					<span>by {comment.author} at {formatDate(comment.timestamp)}</span>
 		 					<p>{comment.body}</p>
+		 					<div className='button-container'>
+		 						<button className='red-button'
+		 							onClick={() => this.props.editComment(comment.id)}>
+		 							Edit
+		 						</button>
+		 						<button className='red-button'
+		 							onClick={() => this.onDeleteComment(comment.id)}>
+		 							Delete
+		 						</button>
+		 					</div>
+		 					
 	 					</div>
 	 				</li>
 	 			)) : ( 
-	 				<li className='comment-container empty'>No comments yet.</li>
+	 				<li className='comment-container empty container'>No comments yet.</li>
 	 			)
  			}
  		</ul>

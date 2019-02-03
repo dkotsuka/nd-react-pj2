@@ -1,4 +1,8 @@
-import { RECEIVE_COMMENTS, VOTE_COMMENT, ADD_COMMENT } from '../actions/comments'
+import { RECEIVE_COMMENTS, 
+	VOTE_COMMENT, 
+	ADD_COMMENT, 
+	DELETE_COMMENT,
+	EDIT_COMMENT } from '../actions/comments'
 
 export default function comments(state={}, action) {
 	switch (action.type) {
@@ -40,6 +44,23 @@ export default function comments(state={}, action) {
 				}
 			}
 
+		case DELETE_COMMENT:
+			const removedState = Object.assign({}, state)
+			delete removedState[action.parentId][action.id]
+			return removedState
+
+		case EDIT_COMMENT:
+			return {
+				...state,
+				[action.comment.parentId] : {
+					...state[action.comment.parentId],
+					[action.comment.id] : {
+						...state[action.comment.parentId][action.comment.id],
+						timestamp: action.comment.timestamp,
+						body: action.comment.body
+					}
+				}
+			}
 		default:
 			return state
 	}

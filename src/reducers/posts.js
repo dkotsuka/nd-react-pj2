@@ -1,9 +1,13 @@
-import { RECEIVE_POSTS, VOTE_POST, ADD_POST, REFRESH_POST } from '../actions/posts'
+import { RECEIVE_POSTS, 
+	VOTE_POST, ADD_POST, 
+	REFRESH_POST,
+	DELETE_POST,
+	EDIT_POST } from '../actions/posts'
 
 export default function posts(state={}, action) {
+	let newState = {}
 	switch (action.type) {
 		case RECEIVE_POSTS:
-			let newState = {}
 			for (let key in action.posts) {
 				newState = Object.assign(newState, {[action.posts[key].id]: action.posts[key]})
 			}
@@ -25,12 +29,23 @@ export default function posts(state={}, action) {
 			}
 
 		case REFRESH_POST:
-			console.log(action)
 			return {
 				...state,
 				[action.post.id] : action.post
 			}
 
+		case DELETE_POST:
+			newState = Object.assign({}, state)
+			delete newState[action.id]
+			return newState
+
+		case EDIT_POST:
+			newState = Object.assign({}, state, {
+				[action.post.id]: {
+					...action.post
+				}
+			})
+			return newState
 		default:
 			return state
 	}

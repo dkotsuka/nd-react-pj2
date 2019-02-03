@@ -10,7 +10,6 @@ import { connect } from 'react-redux'
 class Post extends Component {
 	render (){
 		const { post, dispatch } = this.props
-		const { voteScore } = this.props.post
 		return <li className='post'>
 			<div className='post-container'>
 				<div className='votes-container'>
@@ -18,13 +17,13 @@ class Post extends Component {
 						<button onClick={() => dispatch(handleVotePost(post.id, "upVote"))}>
 							<FaAngleUp />
 						</button>
-						<p>{voteScore}</p>
+						<p>{post.voteScore}</p>
 						<button onClick={() => dispatch(handleVotePost(post.id, "downVote"))}>
 							<FaAngleDown />
 						</button>
 					</IconContext.Provider>
 				</div>
-				<NavLink to={`/post/${post.id}`} exact>
+				<NavLink to={`/${post.category}/${post.id}`} exact>
 					<div className='post-content'>
 						<h2><span>{post.category}</span>{post.title}</h2>
 						<div>
@@ -46,13 +45,12 @@ class Post extends Component {
 		</li>
 	}
 }
-function mapStateToProps({posts}, {id}) {
-	for (let key in posts) {
-		if(posts[key].id === id) {
-			return { post : posts[key] }
-		}
+function mapStateToProps({ posts }, {id}) {	
+	const post = posts[id]
+	if(post){
+		return { post }
 	}
-	return { post: {}}
+	return { post: {} }
 }
 
 export default withRouter(connect(mapStateToProps)(Post))

@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 import Nav from "./Nav"
 import { connect } from "react-redux"
-import { handleAddPost } from "../actions/posts"
+import { handleAddPost, handleEditPost } from "../actions/posts"
+import { withRouter } from 'react-router-dom'
 
-class NewPostView extends Component {
+class EditPostView extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -15,43 +16,49 @@ class NewPostView extends Component {
 	}
 
 	componentDidMount() {
-		if(this.props.id){
-			const { title, body } = this.props.post
-			this.setState({title, body})
+		if(this.props.post){
+			const {title, body, author, category} = this.props.post
+			this.setState({author, title, body, category})		
 		}
 	}
 
-	handleTitleChange = (e) => {
+	onTitleChange = (e) => {
 		const title = e.target.value
 		this.setState({title})
 	}
 
-	handleBodyChange = (e) => {
+	onBodyChange = (e) => {
 		const body = e.target.value
 		this.setState({body})
 	}
 
-	handleCategoryChange = (e) => {
+	onCategoryChange = (e) => {
 		const category = e.target.value
 		this.setState({category})
 	}
 
-	handleChangeAuthor = (e) => {
+	onChangeAuthor = (e) => {
 		const author = e.target.value
 		this.setState({author})
 	}
 
-	handleSubmit = (e) => {
+	onSubmit = (e) => {
 		e.preventDefault()
 		const {author, title, body, category} = this.state
 		if ( title.length > 0 && body.length > 0 ) {
-			const post = {
-				author: author === "" ? "anonymous" : author,
-				title,
-				body,
-				category
+			if(!this.props.post){
+				const post = {
+					author: author === "" ? "anonymous" : author,
+					title,
+					body,
+					category
+				}
+				this.props.dispatch(handleAddPost(post))
+			} else {
+				const id = this.props.post.id
+				const {title, body} = this.state
+				this.props.dispatch(handleEditPost(id, title, body))
 			}
-			this.props.dispatch(handleAddPost(post))
 			window.history.back()
 		} else {
 			alert("Your post must have a title and a body text.")
@@ -64,16 +71,21 @@ class NewPostView extends Component {
 		const { categories } = this.props
 		return <div className="new-post-view">
 			<Nav />
-			<div className="input-container">
-				<form onSubmit={this.handleSubmit}>
+			<div className="input-container container">
+				<form onSubmit={this.onSubmit}>
 					<div>
-						<input type="text" value={this.state.author} 
-							onChange={this.handleChangeAuthor}
-							placeholder="User name"/>
+						<label>
+						Author: 
+						{this.props.post 
+							? <span>{this.props.post.author}</span> 
+							: <input type="text" value={this.state.author} 
+							onChange={this.onChangeAuthor}
+							placeholder="User name"/>}
+						</label>
 						<label>
 							Category:
 							<select value={this.state.category}
-								onChange={this.handleCategoryChange}>
+								onChange={this.onCategoryChange}>
 								{categories.map((category)=> 
 									<option key={category}>{category}</option>
 								)}
@@ -81,10 +93,10 @@ class NewPostView extends Component {
 						</label>
 					</div>
 					<input type="text" value={this.state.title} placeholder="Title" 
-						onChange={this.handleTitleChange}/>
+						onChange={this.onTitleChange}/>
 
 					<textarea type="text" value={this.state.body} placeholder="Write your text here."
-						onChange={this.handleBodyChange}/>
+						onChange={this.onBodyChange}/>
 
 					<input type="submit" value="Submit" />
 				</form>
@@ -93,14 +105,11 @@ class NewPostView extends Component {
 	}
 }
 
-function mapStateToProps({ categories, posts }, {id}) {
-	let post = {}
+function mapStateToProps({ categories, posts }, props) {
+	const { id } = props.match.params
 	const categorylist = []
-	for (let key in posts) {
-		if (posts[key].id === id){
-			post = posts[key]
-		}
-	}
+	const post = posts[id]
+
 	for (let key in categories) {
 		categorylist.push(categories[key].name)
 	}
@@ -108,4 +117,4 @@ function mapStateToProps({ categories, posts }, {id}) {
 	return { post, categories: categorylist }
 }
 
-export default connect(mapStateToProps)(NewPostView)
+export default withRouter(connect(mapStateToProps)(EditPostView))

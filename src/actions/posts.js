@@ -1,5 +1,5 @@
 import { generateId } from '../utils/helpers'
-import { getAllPosts, addNewPost, votePost, getPost } from '../utils/API'
+import { getAllPosts, addNewPost, votePost, getPost, removePost, modifyPost } from '../utils/API'
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const ADD_POST = 'ADD_POST'
@@ -83,9 +83,25 @@ function editPost(post) {
 }
 
 export function handleEditPost(id, title, body) {
-	return editPost({
-		id,
-		title,
-		body
-	})
+	return (dispatch) => {
+		return modifyPost({
+			id,
+			title,
+			body
+		}).then((res) => dispatch(editPost(res)))
+	}
+}
+
+function deletePost({id}) {
+	return {
+		type: DELETE_POST,
+		id
+	}
+}
+
+export function handleDeletePost(id) {
+	return (dispatch) => {
+		return removePost(id)
+		.then((res) => dispatch(deletePost(res)))
+	}
 }

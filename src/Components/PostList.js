@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Post from './Post'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
+import Nav from './Nav'
 
 class PostList extends Component {
 
@@ -14,10 +15,10 @@ class PostList extends Component {
 
 	filterPosts() {
 		let { posts } = this.props
-		let path = this.props.location.pathname
-		if (path.includes("category")) {
-			path = path.replace("/category/", "")
-			posts = posts.filter((post) => post.category === path)
+		const category = this.props.match.params.category
+
+		if (category) {
+			posts = posts.filter((post) => post.category === category)
 		}
 		return posts
 	}
@@ -40,8 +41,9 @@ class PostList extends Component {
 		this.orderPosts(posts)
 		
 		return <div>
-			<div className='selector-container'>
-				<NavLink to='/newpost' exact><span>+ New Post</span></NavLink>
+			<Nav />
+			<div className='selector-container container'>
+				<NavLink to='/new' exact><span>+ New Post</span></NavLink>
 				<div>
 					<span id="order">Order by: </span>
 					<select value={this.state.order} 
@@ -59,7 +61,7 @@ class PostList extends Component {
 					)}
 				</ul>
 			):(
-				<div className='empty-box'><p>Humm... There's nothing to show here...</p></div>
+				<div className='empty-box container'><p>Humm... There's nothing to show here...</p></div>
 			))}
 		</div>
 	}
